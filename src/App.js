@@ -1,25 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import { connect } from 'react-redux'
 
-function App() {
+import { List } from 'antd'
+import Footer from './components/Footer'
+import Header from './components/Header'
+
+import './App.css'
+
+function App(props) {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+      <List
+        header={<Header />}
+        dataSource={props.todos}
+        renderItem={todo => <List.Item>{todo.name}</List.Item>}
+        footer={<Footer />}
+      />
     </div>
-  );
+  )
 }
 
-export default App;
+
+const mapStateToProps = state => ({
+  todos: state.todos,
+})
+
+
+
+export default connect(mapStateToProps)(App)
