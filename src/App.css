@@ -13,4 +13,8 @@ body {
   padding: 10px;
 }
 
+.done {
+  text-decoration: line-through
+}
+
 @import '~antd/dist/antd.css';

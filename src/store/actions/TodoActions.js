@@ -1,4 +1,4 @@
-import { HANDLEINPUTCHANGE, INSERTTODO, DELETETODO } from "./TodoActionsTypes"
+import { HANDLEINPUTCHANGE, INSERTTODO, DELETETODO, SELECTEDTODO, SELECTEDALLTODO } from "./TodoActionsTypes"
 
 // 监听输入框的改变
 export const handleInputChange = ev => ({
@@ -17,3 +17,13 @@ export const deleteTodo = index => ({
   index,
 })
 
+// 选中复选框
+export const selectedTodo = index => ({
+  type: SELECTEDTODO,
+  index
+})
+
+// 全选
+export const selectedAllTodo = () => ({
+  type: SELECTEDALLTODO
+})

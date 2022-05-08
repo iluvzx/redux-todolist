@@ -1,4 +1,4 @@
-import { INSERTTODO, HANDLEINPUTCHANGE, DELETETODO } from '../actions/TodoActionsTypes'
+import { INSERTTODO, HANDLEINPUTCHANGE, DELETETODO, SELECTEDTODO, SELECTEDALLTODO } from '../actions/TodoActionsTypes'
 
 const initialState = {
   todos: [
@@ -6,25 +6,33 @@ const initialState = {
     { id: 2, name: '睡觉', done: true },
     { id: 3, name: '打豆豆', done: true },
   ],
-  value: ''
+  value: '',
+  checkAll: false
 }
 
 // eslint-disable-next-line
-export default (state = initialState, action) => {
-  switch (action.type) {
+export default (state = initialState, { type, value, index }) => {
+  switch (type) {
     case HANDLEINPUTCHANGE:
       return {
         todos: state.todos,
-        value: action.value
       }
     case INSERTTODO:
       return {
-        todos: [{name: state.value, done: false} ,...state.todos]
+        todos: [{ name: state.value, done: false }, ...state.todos]
       }
     case DELETETODO:
       return {
-        todos: state.todos.filter((_, index) => index !== action.index)
+        todos: state.todos.filter((_, indey) => indey !== index)
       }
+    case SELECTEDTODO:
+      const newArr = [...state.todos]
+      newArr[index].done = !newArr[index].done
+      return {
+        todos: newArr 
+      }
+    case SELECTEDALLTODO:
+      // TODO
     default:
       return state
   }
