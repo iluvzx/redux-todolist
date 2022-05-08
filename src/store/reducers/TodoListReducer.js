@@ -1,3 +1,5 @@
+import { INSERTTODO, HANDLEINPUTCHANGE } from '../actions/TodoActionsTypes'
+
 const initialState = {
   todos: [
     { id: 1, name: 'todo1', done: false },
@@ -7,6 +9,19 @@ const initialState = {
   value: ''
 }
 
+// eslint-disable-next-line
 export default (state = initialState, action) => {
-  return state
+  switch (action.type) {
+    case HANDLEINPUTCHANGE:
+      return {
+        todos: state.todos,
+        value: action.value
+      }
+    case INSERTTODO:
+      return {
+        todos: [{name: state.value} ,...state.todos]
+      }
+    default:
+      return state
+  }
 }

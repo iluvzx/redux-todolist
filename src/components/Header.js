@@ -1,29 +1,28 @@
 import { Input } from 'antd'
 import { connect } from 'react-redux'
-// import HeaderReducer from '../store/reducers/HeaderReducer'
+import { bindActionCreators } from 'redux'
+import * as actions from '../store/actions/TodoActions'
 
 function Header(props) {
   return (
     <Input
-      placeholder='你今天要做什么？'
+      placeholder='添加一些待办事件，按回车键确认~'
       size='large'
       value={props.value}
-      onChange={e => props.handleInputChange(e)}
+      onChange={ev => props.handleInputChange(ev)}
+      onPressEnter={() => props.insertTodo()}
     />
   )
 }
 
+// 映射状态到props
 const mapStateToProps = state => ({
-  value: state.HeaderReducer.value
+  value: state.TodoListReducer.value
 })
 
+// 映射action到props
 const mapDispatchProps = dispatch => ({
-  handleInputChange(e) {
-    dispatch({
-      type: 'handleInputChange',
-      value: e.target.value
-    })
-  }
+  ...bindActionCreators(actions, dispatch)
 })
 
 export default connect(mapStateToProps, mapDispatchProps)(Header)

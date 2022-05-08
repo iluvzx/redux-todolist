@@ -7,9 +7,10 @@ body {
 }
 
 .container {
-  width: 700px;
+  width: 600px;
   background-color: #fff;
   box-shadow: 0 6px 10px 0 rgb(95 101 105 / 15%);
+  padding: 10px;
 }
 
 @import '~antd/dist/antd.css';
