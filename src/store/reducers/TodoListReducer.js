@@ -1,10 +1,10 @@
-import { INSERTTODO, HANDLEINPUTCHANGE } from '../actions/TodoActionsTypes'
+import { INSERTTODO, HANDLEINPUTCHANGE, DELETETODO } from '../actions/TodoActionsTypes'
 
 const initialState = {
   todos: [
-    { id: 1, name: 'todo1', done: false },
-    { id: 2, name: 'todo2', done: false },
-    { id: 3, name: 'todo2', done: true },
+    { id: 1, name: '吃饭', done: false },
+    { id: 2, name: '睡觉', done: true },
+    { id: 3, name: '打豆豆', done: true },
   ],
   value: ''
 }
@@ -19,7 +19,11 @@ export default (state = initialState, action) => {
       }
     case INSERTTODO:
       return {
-        todos: [{name: state.value} ,...state.todos]
+        todos: [{name: state.value, done: false} ,...state.todos]
+      }
+    case DELETETODO:
+      return {
+        todos: state.todos.filter((_, index) => index !== action.index)
       }
     default:
       return state

@@ -1,60 +1,40 @@
 import { connect } from 'react-redux'
-
-import { List, Button } from 'antd'
+import { bindActionCreators } from 'redux'
+import * as actions from './store/actions/TodoActions'
+import { List, Button, Checkbox, Space } from 'antd'
 import Footer from './components/Footer'
 import Header from './components/Header'
-
 import './App.css'
-import { Component } from 'react'
 
-// function App(props) {
-//   return (
-//     <div className="container">
-//       <List
-//         size="large"
-//         header={<Header />}
-//         footer={<Footer />}
-//         bordered
-//         dataSource={props.todos}
-//         renderItem={todo =>
-//           <List.Item style={{display: 'flex'}}>
-//             {todo.name}
-//             <Button danger>删除</Button>
-//           </List.Item>}
-//       />
-//     </div>
-//   )
-// }
-
-
-class App extends Component {
-  constructor(props) {
-    super(props)
-    console.log(props)
-  }
-  render() {
-    return (
-      <div className="container">
-        <List
-          size="large"
-          header={<Header value={this.props.value} insertTodo={() => this.insertTodo()} />}
-          footer={<Footer />}
-          bordered
-          dataSource={this.props.todos}
-          renderItem={todo => <List.Item>{todo.name}</List.Item>}
-        />
-      </div>
-    )
-  }
-
+function App({ todos, deleteTodo }) {
+  return (
+    <div className="container">
+      <List
+        size="large"
+        header={<Header />}
+        footer={<Footer length={todos.length} doneTodo={todos} />}
+        bordered
+        dataSource={todos}
+        renderItem={(todo, index) =>
+          <List.Item style={{ display: 'flex' }}>
+            <Space>
+              <Checkbox />
+              <span>{todo.name}</span>
+            </Space>
+            <Button type='primary' danger onClick={() => deleteTodo(index)}>删除
+            </Button>
+          </List.Item>}
+      />
+    </div>
+  )
 }
-
-
 
 const mapStateToProps = state => ({
   todos: state.TodoListReducer.todos,
 })
 
+const mapDispatchProps = dispatch => ({
+  ...bindActionCreators(actions, dispatch)
+})
 
-
-export default connect(mapStateToProps)(App)
+export default connect(mapStateToProps, mapDispatchProps)(App)
